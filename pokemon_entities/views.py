@@ -26,7 +26,7 @@ def show_all_pokemons(request):
     pokemons = Pokemon.objects.all()
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
     for pokemon in pokemons:
-        img_url = pokemon.get_image(request)
+        img_url = pokemon.get_image(request, DEFAULT_IMAGE_URL)
         pokemons_on_page.append(
             {
                 "pokemon_id": pokemon.id,
@@ -60,7 +60,7 @@ def show_pokemon(request, pokemon_id):
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
     pokemonentities = PokemonEntity.objects.filter(pokemon=pokemon)
     pokemon_description = {
-        "img_url": pokemon.get_image(request),
+        "img_url": pokemon.get_image(request, DEFAULT_IMAGE_URL),
         "title_ru": pokemon.title_ru,
         "title_en": pokemon.title_en,
         "title_jp": pokemon.title_jp,
@@ -69,14 +69,14 @@ def show_pokemon(request, pokemon_id):
     if pokemon.previous_evolution:
         pokemon_description["previous_evolution"] = {
             "pokemon_id": pokemon.previous_evolution.id,
-            "img_url": pokemon.previous_evolution.get_image(request),
+            "img_url": pokemon.previous_evolution.get_image(request, DEFAULT_IMAGE_URL),
             "title_ru": pokemon.previous_evolution.title_ru,
         }
     next_evolution_pokemon = pokemon.next_evolutions.first()
     if next_evolution_pokemon:
         pokemon_description["next_evolution"] = {
             "pokemon_id": next_evolution_pokemon.id,
-            "img_url": next_evolution_pokemon.get_image(request),
+            "img_url": next_evolution_pokemon.get_image(request, DEFAULT_IMAGE_URL),
             "title_ru": next_evolution_pokemon.title_ru,
         }
 
