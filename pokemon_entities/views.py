@@ -35,7 +35,7 @@ def show_all_pokemons(request):
                 "title_ru": pokemon.title_ru,
             }
         )
-        pokemonentities = pokemon.pokemon_entity.filter(pokemon=pokemon)
+        pokemonentities = pokemon.pokemon_entities.filter(pokemon=pokemon)
         for pokemonentity in pokemonentities:
             add_pokemon(
                 folium_map,
@@ -57,7 +57,7 @@ def show_all_pokemons(request):
 def show_pokemon(request, pokemon_id):
     pokemon = get_object_or_404(Pokemon, id=pokemon_id)
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
-    pokemonentities = pokemon.pokemon_entity.all()
+    pokemonentities = pokemon.pokemon_entities.all()
     pokemon_description = {
         "img_url": pokemon.get_image(request, DEFAULT_IMAGE_URL),
         "title_ru": pokemon.title_ru,
